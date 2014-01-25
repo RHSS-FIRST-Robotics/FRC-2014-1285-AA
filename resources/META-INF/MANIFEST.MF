@@ -1,0 +1,6 @@
+MIDlet-Name: AA1285
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: FIRST
+MIDlet-1: AA1285, ,  BigBang.main.AA1285
+MicroEdition-Profile: IMP-1.0
+MicroEdition-Configuration: CLDC-1.1
