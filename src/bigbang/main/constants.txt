@@ -1,0 +1,11 @@
+tIntakeJoyScaler = 3
+tDriveJoyScaler = 3
+
+bWinchPosTolerance = 3
+bWinchWindBackSpeed = 1
+
+bWinchPosOne = 330
+bWinchPosTwo = 390
+
+bWinchShiftSpeed = 1
+bWinchShiftTime = 0.3

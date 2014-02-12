@@ -9,6 +9,7 @@ package bigbang.subsystems;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import bigbang.main.ElectricalConstants;
+import bigbang.utilities.Constants;
 import bigbang.utilities.ToggleBoolean;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Relay;
@@ -48,6 +49,8 @@ public class Intake {
         intakeAnglePiston = new DoubleSolenoid (ElectricalConstants.INTAKE_DOWN, ElectricalConstants.INTAKE_UP);
         intakeAngleToggle = new ToggleBoolean();
         //intakeLimit = new DigitalInput(ElectricalConstants.INTAKE_BALL_LIMIT);
+        
+        Constants.getInstance();
     }
     public static Intake getInstance() {
     

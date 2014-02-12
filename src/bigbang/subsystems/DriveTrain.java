@@ -8,6 +8,7 @@
     import edu.wpi.first.wpilibj.Encoder;
     import bigbang.utilities.TheoryGyro;
     import bigbang.main.ElectricalConstants;
+import bigbang.utilities.Constants;
     import bigbang.utilities.JoystickScaler;
     import edu.wpi.first.wpilibj.Talon;
 
@@ -53,6 +54,8 @@
                                             Encoder.EncodingType.k4X);        
             rightDriveEncoder.setDistancePerPulse(ElectricalConstants.driveEncoderDistPerTick); 
             rightDriveEncoder.start();
+            
+            Constants.getInstance();
 
         }
         

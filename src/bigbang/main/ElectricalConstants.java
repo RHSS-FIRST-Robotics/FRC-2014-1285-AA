@@ -14,39 +14,44 @@ public class ElectricalConstants {
     //****************************** PWMs **************************************
     //**************************************************************************        
     
-    public static final int FRONT_AND_BACK_RIGHT_DRIVE_PWM      = 7; 
-    public static final int TOP_RIGHT_DRIVE_PWM                 = 8;
+    // 1, 2, 3, 4 LEFT SIDE 
+    // 5, 6, 7, 8 RIGHT SIDE 
+
     public static final int FRONT_AND_BACK_LEFT_DRIVE_PWM       = 1; 
     public static final int TOP_LEFT_DRIVE_PWM                  = 2;
-
+    
+    public static final int FRONT_AND_BACK_RIGHT_DRIVE_PWM      = 7; 
+    public static final int TOP_RIGHT_DRIVE_PWM                 = 8;
+    
+    public static final int LEFT_SIDE_INTAKE_PWM                = 4;
+    public static final int RIGHT_SIDE_INTAKE_PWM               = 5;
+    
+    public static final int LEFT_WINCH_PWM                      = 6;
+    public static final int RIGHT_WINCH_PWM                     = 3;
 
     //**************************************************************************
     //***************************Analog Sensors*********************************
     //**************************************************************************
 
     public static final int DRIVE_GYRO_PORT                     = 1;
-    public static final int DROP_DOWN_POT                       = 2;
-    public static final int INTAKE_LEFT_SENSOR                  = 3;
-    public static final int INTAKE_RIGHT_SENSOR                 = 4;
-    
+    public static final int WINCH_POT                           = 2;
+
     //**************************************************************************
     //*************************** ENCODERS *************************************
     //**************************************************************************
-    
-    public static final int LEFT_DRIVE_ENC_A                    = 2; 
-    public static final int LEFT_DRIVE_ENC_B                    = 1; 
+ 
+    public static final int LEFT_DRIVE_ENC_A                    = 1; 
+    public static final int LEFT_DRIVE_ENC_B                    = 2; 
     public static final int RIGHT_DRIVE_ENC_A                   = 3; 
-    public static final int RIGHT_DRIVE_ENC_B                   = 4; 
-    public static final int SHOOTER_ENC_A                       = 5; 
-    public static final int SHOOTER_ENC_B                       = 6; 
-    
+    public static final int RIGHT_DRIVE_ENC_B                   = 4;     
+
     //**************************************************************************
     //*************************** Digital Sensors ******************************
     //**************************************************************************
-    public static final int COMPRESSOR_PRESSURE_SENSOR          = 7;
-    public static final int LEFT_ROLLER_LIMIT                   = 9;
-    public static final int RIGHT_ROLLER_LIMIT                  = 8;
     
+    public static final int COMPRESSOR_PRESSURE_SENSOR          = 5;
+    //public static final int INTAKE_BALL_LIMIT                   = ;
+
     //******************UPDATE THESE CONSTANTS WITH REAL ROBOT******************
     public static final int driveWheelRadius = 2;//wheel radius in inches
     public static final int pulsePerRotation = 256; //encoder pulse per rotation
@@ -59,29 +64,21 @@ public class ElectricalConstants {
    //***************************************************************************
    //*************************** Pneumatics ************************************
    //***************************************************************************
-    
-    //Solenoid Breakout 1 (Module 3 on cRIO)
-    public static final int SHIFTER_EXTEND                      = 1;
-    public static final int SHIFTER_RETRACT                     = 2;
-    public static final int FRISBEE_LOADING_EXTEND              = 3;
-    public static final int FRISBEE_LOADING_RETRACT             = 4;
-    public static final int SHOOTER_ANGLE_EXTEND                = 6;
-    public static final int SHOOTER_ANGLE_RETRACT               = 5;
-    public static final int HANGER_EXTEND                       = 7;
-    public static final int HANGER_RETRACT                      = 8;
-    
-    //Solenoid Breakout 2 (Module 4 on cRIO)
-    
-    public static final int WIPER_PISTON_EXTEND                 = 1;
-    public static final int WIPER_PISTON_RETRACT                = 2;
-            
+    public static final int INTAKE_DOWN                         = 1;
+    public static final int INTAKE_UP                           = 2;
+    public static final int WINCH_ENGAGE                        = 3;
+    public static final int WINCH_DISENGAGE                     = 4;
+    public static final int TRUSS_ENGAGE                        = 5;
+    public static final int TRUSS_DISENGAGE                     = 6;
+         
+
     
    //***************************************************************************
    //*************************** Relays ****************************************
    //***************************************************************************
     
     public static final int COMPRESSOR_RELAY                    = 1;
-    public static final int BLUE_LED_RELAY                      = 2;
-    public static final int RED_LED_RELAY                       = 3;
-    public static final int GREEN_LED_RELAY                     = 4;
+    public static final int LEFT_SIDE_INTAKE                    = 2;
+    public static final int RIGHT_SIDE_INTAKE                   = 3;
+
 }

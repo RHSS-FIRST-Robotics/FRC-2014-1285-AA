@@ -31,6 +31,7 @@ public class Catapult {
     ToggleBoolean winchShiftToggle;
     
     AnalogChannel winchPot;
+    
     Timer winchShiftTimer;
 
     final boolean ENGAGED = true;
@@ -67,9 +68,7 @@ public class Catapult {
         
         winchShiftTimer = new Timer();
         winchShiftTimer.start();
-        
-        
-        
+
         Constants.getInstance();
     }
 
@@ -129,6 +128,8 @@ public class Catapult {
                     winchSetpoint = Constants.getDouble("bWinchPosOne");
                 else if (presetTwo)
                     winchSetpoint = Constants.getDouble("bWinchPosTwo");
+                else
+                    winchSetpoint = getWinchPot();
                 
                 setWinchPos(winchSetpoint);
             }  
