@@ -230,6 +230,14 @@ public class Catapult {
         }
     }
     
+    public boolean isEngaged() {
+        return winchPistonState;
+    }
+    
+    public boolean isTrussPistonExtended() {
+        return trussPistonState;
+    }
+    
     private void log(Object aObject){
         System.out.println(String.valueOf(aObject));
     }
