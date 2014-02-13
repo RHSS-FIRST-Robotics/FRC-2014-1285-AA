@@ -120,4 +120,8 @@ public class Intake {
         else
             intakeAnglePiston.set(DoubleSolenoid.Value.kReverse);
     }
+    
+      private void log(Object aObject){
+        System.out.println(String.valueOf(aObject));
+    }
 }

@@ -36,7 +36,7 @@ public class Catapult {
 
     final boolean ENGAGED = true;
     final boolean DISENGAGED = false;
-    boolean winchPistonState = ENGAGED; //piston assumed to be engaged in gearbox in default state when robot is turned on
+    boolean winchPistonState = DISENGAGED; //piston assumed to be engaged in gearbox in default state when robot is turned on
 
     final boolean EXTENDED = true;
     final boolean RETRACTED = false;
@@ -50,6 +50,13 @@ public class Catapult {
     
     final int WIND_WINCH = 2;
     int setWinchPosSeq = WIND_WINCH;
+    
+    boolean firstRun = true; //used in disengageWinch
+    
+    double error;
+    double lastError;
+    double deltaError;
+    double lastDeltaError;
     
     public Catapult()
     {
@@ -114,7 +121,7 @@ public class Catapult {
         }
     }
     
-    public void setWinch(double manualAdjustment, 
+    public void windWinch(double manualAdjustment, 
             boolean presetOne, boolean presetTwo){
             
             if (Math.abs(manualAdjustment) > 0.1) {
@@ -133,6 +140,19 @@ public class Catapult {
                 
                 setWinchPos(winchSetpoint);
             }  
+    }
+    
+        public boolean winchOnTarget() {
+        error = winchSetpoint - getWinchPot();
+        
+        boolean done = (Math.abs(error) < Constants.getInteger("bWinchPosTolerance")) &&
+                       (Math.abs(lastDeltaError) < Constants.getInteger("bWinchDeltaErrorTolerance"));
+        
+        deltaError = error - lastError;
+        lastError = error;
+        lastDeltaError = deltaError;
+        
+        return done;
     }
     
     public void toggleWinchPiston(boolean winchPistonToggleButton) {        
@@ -195,16 +215,23 @@ public class Catapult {
                 break;
         }
         
-         
-
         winchPistonState = true; 
     }
 
     public void disengageWinch(boolean disengage) {
+        if(firstRun) {
+            winchPistonState = ENGAGED;
+            firstRun = false;
+        }
+        
         if(winchPistonState && disengage){
             winchReleasePiston.set(DoubleSolenoid.Value.kForward);
             winchPistonState = DISENGAGED;  
         }
+    }
+    
+    private void log(Object aObject){
+        System.out.println(String.valueOf(aObject));
     }
 
 }
