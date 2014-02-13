@@ -133,6 +133,8 @@ public class AA1285 extends IterativeRobot {
         dsLCD.println(DriverStationLCD.Line.kUser3, 1, "?: " + (catapult.winchOnTarget() ? 1 : 0) 
                                                       + " Catapult Pot: "+ catapult.getWinchPot());
         
+        dsLCD.println(DriverStationLCD.Line.kUser4, 1, "WinchEngaged?: " + (catapult.isEngaged() ? 1 : 0) + " TrussPiston?: " + (catapult.isTrussPistonExtended() ? 1 : 0));
+        
 //        dsLCD.println(DriverStationLCD.Line.kUser4, 1, "Limit Switch: "
 //        + intake.ballDetected());
         
