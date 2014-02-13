@@ -37,6 +37,8 @@ public class PIDControllerV2 {
     
     double lastDeltaError = 0;
     
+    double deltaError = 0;
+    
     public PIDControllerV2(double p, double i, double d, double ff) {   
         errorSum = 0;       //initialize errorSum to 0
         lastError = 0;      //initialize lastError to 0 
@@ -69,7 +71,11 @@ public class PIDControllerV2 {
         
         ffOut = ffGain*setpoint;
         
+        deltaError = error - lastError;
+        
         lastError = error;
+        
+        lastDeltaError = deltaError;
 
         out = pOut + iOut + dOut + ffOut;
         
