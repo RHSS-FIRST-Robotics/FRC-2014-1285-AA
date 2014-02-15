@@ -14,7 +14,7 @@ import bigbang.utilities.MathLogic;
 
 /**
  *
- * @author Sagar and Het
+ * @author Sagar
  */
 public class DriveToPosTimeOutCommand implements AutonCommand {
     

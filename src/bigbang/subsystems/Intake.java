@@ -67,8 +67,8 @@ public class Intake {
             rightSide.set(0);
         }
         else{
-            leftSide.set(pwm);
-            rightSide.set(-pwm);
+            leftSide.set(-pwm);
+            rightSide.set(pwm);
         }
     }
     public void setPG71(double intakePWM)
