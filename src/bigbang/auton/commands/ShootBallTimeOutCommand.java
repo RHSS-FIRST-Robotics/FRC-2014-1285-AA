@@ -6,8 +6,10 @@
 
 package bigbang.auton.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import bigbang.auton.AutonCommand;
 import bigbang.subsystems.Catapult;
+import bigbang.utilities.Constants;
 
 /**
  *
@@ -16,16 +18,25 @@ import bigbang.subsystems.Catapult;
 public class ShootBallTimeOutCommand implements AutonCommand{
     
     Catapult catapult;   
+    Timer t = new Timer();
+    double setpoint;
+    double timeOutInSecs;
    
     public ShootBallTimeOutCommand(){
+ 
         catapult = Catapult.getInstance();
+ 
     }
     public void init() {
-
+        t.reset();
+        t.start();   
     }
     public boolean run() {
+
+      
        catapult.disengageWinch(true);
-       return true;
+
+        return true;
     }
     public void done() {
         catapult.setWinchPWM(0);

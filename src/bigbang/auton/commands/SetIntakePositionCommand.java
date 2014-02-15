@@ -14,10 +14,10 @@ import bigbang.subsystems.Intake;
  *
  * @author Shubham
  */
-public class ToggleIntakePosCommand implements AutonCommand{
+public class SetIntakePositionCommand implements AutonCommand{
     Intake intake;   
     
-    public ToggleIntakePosCommand (){
+    public SetIntakePositionCommand (){
         intake = intake.getInstance();
     }
         
@@ -26,7 +26,9 @@ public class ToggleIntakePosCommand implements AutonCommand{
     }
 
     public boolean run() {
-        intake.toggleIntakePosAuton(true);
+
+    intake.toggleIntakePosAuton(true);
+    
         return true;
     }
 

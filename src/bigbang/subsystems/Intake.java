@@ -74,12 +74,12 @@ public class Intake {
     public void setPG71(double intakePWM)
     {
         if(intakePWM > 0.05){ //intake
-            leftBottomSide.set(Relay.Value.kReverse);
-            rightBottomSide.set(Relay.Value.kForward);
-        }
-        else if (intakePWM < -0.05){ //outake
             leftBottomSide.set(Relay.Value.kForward);
             rightBottomSide.set(Relay.Value.kReverse);
+        }
+        else if (intakePWM < -0.05){ //outake
+            leftBottomSide.set(Relay.Value.kReverse);
+            rightBottomSide.set(Relay.Value.kForward);
         }
         else  
         {
