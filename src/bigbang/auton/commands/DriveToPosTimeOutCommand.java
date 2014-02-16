@@ -88,7 +88,7 @@ public class DriveToPosTimeOutCommand implements AutonCommand {
         
         double currAvgDist = (currLeftDist + currRightDist) / 2;
         double currTime = driveTimer.get();
-        //double driveVel = currAvgDist/(currTime - prevTime);
+        double driveVel = currAvgDist/(currTime - prevTime);
 
         prevTime = currTime;
         prevAvgDist = currAvgDist;
@@ -108,7 +108,7 @@ public class DriveToPosTimeOutCommand implements AutonCommand {
         driveTrain.setLeftPWM(MathLogic.PWMLimit(leftPwr));
         driveTrain.setRightPWM(-MathLogic.PWMLimit(rightPwr));
 
-        return (Math.abs(currAvgDist - distGoal) < 3) /*&& (Math.abs(driveVel) < 6)*/ || timeOutTimer.get() > timeout;
+        return (Math.abs(currAvgDist - distGoal) < Constants.getDouble("driveDistTolerance")) && (Math.abs(driveVel) < 6) || timeOutTimer.get() > timeout;
     }
     
     public void done() {
