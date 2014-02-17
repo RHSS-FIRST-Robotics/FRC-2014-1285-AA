@@ -240,7 +240,7 @@ public class Catapult {
 //            setEngaged = FULLY_ENGAGED;
 //        
 //        switch (setEngaged){
-//            case ENGAGE:
+//            case ENGAGE: 
 //                setWinchPWM(1);//Constants.getDouble("bWinchShiftSpeed"));
 //                winchReleasePiston.set(DoubleSolenoid.Value.kReverse);
 //                

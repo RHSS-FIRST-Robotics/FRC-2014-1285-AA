@@ -23,9 +23,9 @@ public class AutonSequences {
         AutonController ac = new AutonController();
         ac.clear();
         ac.addCommand(new ShootBallTimeOutCommand(Constants.getDouble("TBWinchDisengageTimeout")));
-        ac.addCommand(new DriveToPosTimeOutCommand(Constants.getDouble("DriveForwardDistance"),
-                                   0.0,
-                                   Constants.getDouble("aDriveToNewZoneTimeOut")));
+        ac.addCommand(new DriveToPosTimeOutCommand(Constants.getDouble("OBDriveForwardDist"),
+                                   Constants.getDouble("OBDriveAngle"),
+                                   Constants.getDouble("OBDriveDistTimeout")));
         
 
         return ac;
@@ -70,7 +70,7 @@ public class AutonSequences {
        
        return ac;
    }   
-       
+      
    
        
        public AutonController testAutonDriveV1() { //NEW CONSTANTS UPDATE!
@@ -130,6 +130,9 @@ public class AutonSequences {
          ac.addCommand(new TurnDegreesTimeOutCommand(Constants.getDouble("twoBallTurn2"),Constants.getDouble("twoBallTurnTimeout2")));
          ac.addCommand(new WaitCommand(Constants.getDouble("SecondWait")));
          ac.addCommand(new ShootBallTimeOutCommand(Constants.getDouble("TBWinchDisengageTimeout")));
+         ac.addCommand(new DriveToPosTimeOutCommand(Constants.getDouble("TBDriveForwardDist2"), 
+                                                     Constants.getDouble("TBDriveAngle2"), 
+                                                     Constants.getDouble("TBDriveDistTimeout2")));
 //        ac.addCommand(new SetIntakePositionCommand());
 //        ac.addCommand(new TwoParallelMotionsCommand((new IntakeTimeOutCommand(Constants.getDouble("intakePWM"),Constants.getDouble("intakeTime"))),0,
 //                new DriveToPosTimeOutCommand(Constants.getDouble("TBDriveForwardDist1"), 
