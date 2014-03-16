@@ -8,6 +8,7 @@
 package bigbang.main;
 
 
+import bigbang.auton.AutonController;
 import bigbang.subsystems.Catapult;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.DriverStationLCD;
@@ -15,7 +16,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import bigbang.subsystems.DriveTrain;
 import bigbang.subsystems.Intake;
 import bigbang.utilities.Constants;
+import bigbang.utilities.SendableChooser;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,19 +38,26 @@ public class AA1285 extends IterativeRobot {
     Compressor compressor;
     
     double lcdUpdateCycle = 0;
+    SendableChooser autonSwitcher;
+    AutonController ac = new AutonController();
+    AutonSequences autonSeq = new AutonSequences();
+    
     
     public void robotInit() 
     {
+        compressor = new Compressor(ElectricalConstants.COMPRESSOR_PRESSURE_SENSOR,
+                                    ElectricalConstants.COMPRESSOR_RELAY);
+      
         dsLCD = DriverStationLCD.getInstance();
         driveTrain = DriveTrain.getInstance();
         intake = Intake.getInstance();
         catapult = Catapult.getInstance();
         drivePad = new Joystick(GamepadConstants.DRIVE_USB_PORT);
         toolPad = new Joystick(GamepadConstants.TOOL_USB_PORT);
-        compressor = new Compressor(ElectricalConstants.COMPRESSOR_PRESSURE_SENSOR,ElectricalConstants.COMPRESSOR_RELAY);
+        autonSwitcher = new SendableChooser();
         
-        dsLCD = DriverStationLCD.getInstance();
         Constants.getInstance();
+        //Constants.load();
     }
 
     public void disabledInit(){
@@ -76,14 +86,61 @@ public class AA1285 extends IterativeRobot {
             driveTrain.resetGyro();
             log("Reset Gyro");
         }
+        
+        if (toolPad.getRawButton(GamepadConstants.X_BUTTON)){
+            Constants.load();
+            log("Reloading constants in disabled periodic");
+        }
+        
+                //autonSwitcher.addDefault("Test", 0);
+        autonSwitcher.addInteger("Test-Drive V1", 0); 
+        autonSwitcher.addInteger("Test-Drive V2", 1);
+        autonSwitcher.addInteger("Test-Turn", 2);
+        autonSwitcher.addInteger("One Ball", 3);
+        autonSwitcher.addInteger("Two Ball", 4);
+        SmartDashboard.putData("Auton Selecter", autonSwitcher);  
+                
     }
     
-    public void autonomousInit(){
+   public void autonomousInit(){
         compressor.stop();
+
+        ac.clear();
+        catapult.firstRun = true;
+
+        driveTrain.resetGyro();
+        driveTrain.resetEncoders();
+        
+         switch(autonSwitcher.getSelected()){
+             case 0:
+                ac = autonSeq.testAutonDriveV1();
+                break;
+            case 1:
+                ac = autonSeq.testAutonDriveV2();
+                break;                
+            case 2:
+                ac = autonSeq.testAutonTurn();
+                break;
+            case 3:
+                ac = autonSeq.shootBallDriveForward();
+                break;
+            case 4:
+                ac = autonSeq.twoBallDriveForward();
+                break;
+            case 5:
+                ac = autonSeq.twoBallHotDriveForward();
+                break;
+            case 6:
+                ac = autonSeq.oneBallHotDriveForward();
+                break;
+
+         }
     }
     
     public void autonomousPeriodic() {
+        ac.executeCommands();
         updateDSLCD();
+        updateSmartDashboard();
     }
 
     public void teleopInit(){
@@ -108,19 +165,23 @@ public class AA1285 extends IterativeRobot {
         intake.setIntakePosTeleop(toolPad.getRawButton(GamepadConstants.LEFT_BUMPER));
         
         //Truss Piston
-        catapult.holdTrussPistonPos(toolPad.getRawButton(GamepadConstants.RIGHT_TRIGGER));
+        //catapult.holdTrussPistonPos(toolPad.getRawButton(GamepadConstants.RIGHT_TRIGGER));
         
         //Winch code
         catapult.windWinch(winchJoy, toolPad.getRawButton(GamepadConstants.B_BUTTON), //preset one
                                      toolPad.getRawButton(GamepadConstants.A_BUTTON)); //preset two
         
-        catapult.disengageWinch(toolPad.getRawButton(GamepadConstants.RIGHT_BUMPER));
-        
-        
+       catapult.disengageWinch(toolPad.getRawButton(GamepadConstants.RIGHT_BUMPER));
+       //catapult.setWinchPWM(winchJoy);
+
+        updateSmartDashboard();
         updateDSLCD();
         
     }
-    
+    private void updateSmartDashboard() {
+        SmartDashboard.putString("Left Target", SmartDashboard.getString("Left Target", "No Connection"));
+        SmartDashboard.putString("Right Target", SmartDashboard.getString("Right Target", "No Connection"));
+    }
     private void updateDSLCD() {
         
         dsLCD.println(DriverStationLCD.Line.kUser1, 1, "LEnc: "
@@ -130,20 +191,18 @@ public class AA1285 extends IterativeRobot {
         dsLCD.println(DriverStationLCD.Line.kUser2, 1, "Gyro: "
         + Math.floor(driveTrain.getGyroAngle() * 100) / 100);
         
-        dsLCD.println(DriverStationLCD.Line.kUser3, 1, "?: " + (catapult.winchOnTarget() ? 1 : 0) 
+        dsLCD.println(DriverStationLCD.Line.kUser3, 1, "?:" + (catapult.winchOnTarget() ? 1 : 0) 
                                                       + " Catapult Pot: "+ catapult.getWinchPot());
         
-        dsLCD.println(DriverStationLCD.Line.kUser4, 1, "WinchEngaged?: " + (catapult.isEngaged() ? 1 : 0) + " TrussPiston?: " + (catapult.isTrussPistonExtended() ? 1 : 0));
-        
-//        dsLCD.println(DriverStationLCD.Line.kUser4, 1, "Limit Switch: "
-//        + intake.ballDetected());
+        dsLCD.println(DriverStationLCD.Line.kUser4, 1, "WEngaged?: " + (catapult.isEngaged() ? 1 : 0)); //+ " TP?: " + (catapult.isTrussPistonExtended() ? 1 : 0));
         
         if ((lcdUpdateCycle % 50) == 0) {
             dsLCD.updateLCD();
         } 
         else {
             lcdUpdateCycle++;
-        } 
+        }
+     
     }
     
     private void log(Object aObject){

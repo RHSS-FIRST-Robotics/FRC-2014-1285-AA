@@ -113,11 +113,11 @@ public class DriveTrain
     }
 
     public double getLeftEncoderDist() {
-        return leftDriveEncoder.getDistance();
+        return (leftDriveEncoder.getDistance()/37.0)*40;
     }
 
     public double getRightEncoderDist() {
-        return rightDriveEncoder.getDistance();
+        return (rightDriveEncoder.getDistance()/37.0)*40;
     }
 
     public double getLeftEncoderRaw() {
@@ -144,7 +144,7 @@ public class DriveTrain
     }
 /************************GYRO FUNCTIONS**************************/
     public double getGyroAngle() {
-        return (driveGyro.getAngle()/180)*180.0;
+        return (driveGyro.getAngle()/86)*90;
     }
 
     public void resetGyro() {

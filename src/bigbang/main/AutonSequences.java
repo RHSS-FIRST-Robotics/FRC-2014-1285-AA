@@ -9,6 +9,7 @@ import bigbang.auton.*;
 import bigbang.auton.commands.*;
 
 import bigbang.utilities.Constants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
                                                                                                                 
 /**
@@ -18,7 +19,9 @@ import bigbang.utilities.Constants;
 public class AutonSequences {
         
     DriveTrain driveTrain = DriveTrain.getInstance();
-    
+     final int LEFT_HOT = 0;
+    final int RIGHT_HOT = 1;
+    final int DID_NOT_DETECT = 2;
    public AutonController shootBallDriveForward() { //finalized sequence
         AutonController ac = new AutonController();
         ac.clear();
@@ -30,6 +33,129 @@ public class AutonSequences {
 
         return ac;
     }
+   
+   public AutonController oneBallHotDriveForward() { //finalized sequence
+        AutonController ac = new AutonController();
+        ac.clear();
+        Constants.getInstance();
+       
+        int whichGoal = 0;
+        
+        ac.addCommand(new WaitCommand(Constants.getDouble("camTrackTime")));
+            
+        if((SmartDashboard.getString("Left Target", "No Connection") == "Hot")) {
+           ac.addCommand(new TurnDegreesTimeOutCommand(Constants.getDouble("OBHTurnLeft1"),Constants.getDouble("OBHTurnLeftTimeout1")));
+           whichGoal = LEFT_HOT;
+        }
+        else if((SmartDashboard.getString("Right Target", "No Connection") == "Hot")) {
+           ac.addCommand(new TurnDegreesTimeOutCommand(Constants.getDouble("OBHTurnRight1"),Constants.getDouble("OBHTurnRightTimeout1")));
+           whichGoal = RIGHT_HOT;
+        }
+        else {
+            ac.addCommand(new TurnDegreesTimeOutCommand(Constants.getDouble("OBHTurnLeft1"),Constants.getDouble("OBHTurnLeftTimeout1")));
+            whichGoal = DID_NOT_DETECT;
+        }
+        
+
+        ac.addCommand(new ShootBallTimeOutCommand(Constants.getDouble("TBWinchDisengageTimeout")));
+        
+        switch (whichGoal) {
+            case LEFT_HOT:
+            case DID_NOT_DETECT:
+                ac.addCommand(new TurnDegreesTimeOutCommand(-Constants.getDouble("OBHTurnLeft1"),Constants.getDouble("OBHTurnLeftTimeout1")));
+                break;
+                
+            case RIGHT_HOT:
+                ac.addCommand(new TurnDegreesTimeOutCommand(-Constants.getDouble("OBHTurnRight1"),Constants.getDouble("OBHTurnRightTimeout1")));
+                break;
+        }
+        
+        ac.addCommand(new DriveToPosTimeOutCommand(Constants.getDouble("OBHDriveForwardDist"),
+                                   Constants.getDouble("OBHDriveAngle"),
+                                   Constants.getDouble("OBHDriveDistTimeout")));
+
+        return ac;
+    }
+   
+   public AutonController twoBallHotDriveForward() {
+        AutonController ac = new AutonController();
+        ac.clear();
+        Constants.getInstance();
+        
+        int whichGoal = 0;
+        
+        ac.addCommand(new WaitCommand(Constants.getDouble("camTrackTime")));
+            
+        if((SmartDashboard.getString("Left Target", "No Connection") == "Hot")) {
+           ac.addCommand(new TurnDegreesTimeOutCommand(Constants.getDouble("TBHTurnLeft1"),Constants.getDouble("TBHTurnLeftTimeout1")));
+           whichGoal = LEFT_HOT;
+        }
+        else if((SmartDashboard.getString("Right Target", "No Connection") == "Hot")) {
+           ac.addCommand(new TurnDegreesTimeOutCommand(Constants.getDouble("TBHTurnRight1"),Constants.getDouble("TBHTurnRightTimeout1")));
+           whichGoal = RIGHT_HOT;
+        }
+        else {
+            ac.addCommand(new TurnDegreesTimeOutCommand(Constants.getDouble("TBHTurnLeft1"),Constants.getDouble("TBHTurnLeftTimeout1")));
+            whichGoal = DID_NOT_DETECT;
+        }
+        
+
+        ac.addCommand(new ShootBallTimeOutCommand(Constants.getDouble("TBWinchDisengageTimeout")));
+        
+        ac.addCommand(new EngageWinchCommand(Constants.getDouble("bWinchShiftTime")));
+        
+        switch (whichGoal) {
+            case LEFT_HOT:
+            case DID_NOT_DETECT:
+                ac.addCommand(new TwoParallelMotionsCommand(new TurnDegreesTimeOutCommand(Constants.getDouble("TBHLeftTurnLeft2"),Constants.getDouble("TBHTurnTimeoutLeft2")),
+                        0,
+                        new TwoParallelMotionsCommand(new WindBackWinchTimeOutCommand(Constants.getDouble("TBHWinchSetpoint"),Constants.getDouble("TBHSecondShotWindTimeout")),
+                        0,
+                        new SetIntakePositionCommand())));
+                break;
+                
+            case RIGHT_HOT:
+                ac.addCommand(new TwoParallelMotionsCommand(new TurnDegreesTimeOutCommand(Constants.getDouble("TBHRightTurnLeft2"),Constants.getDouble("TBHTurnTimeoutRight2")),
+                        0,
+                        new TwoParallelMotionsCommand(new WindBackWinchTimeOutCommand(Constants.getDouble("TBHWinchSetpoint"),Constants.getDouble("TBHSecondShotWindTimeout")),
+                        0,
+                        new SetIntakePositionCommand())));
+                break;
+        }
+        
+        ac.addCommand(new TwoParallelMotionsCommand(new DriveToPosTimeOutCommand(Constants.getDouble("TBHDriveForwardDist1"), 
+                                             Constants.getDouble("TBHDriveAngle1"), 
+                                             Constants.getDouble("TBHDriveDistTimeout1")),0,
+                                             new TwoParallelMotionsCommand(new WindBackWinchTimeOutCommand(Constants.getDouble("TBHWinchSetpoint"),
+                                             Constants.getDouble("TBHSecondShotWindTimeout")),
+                                             0,(new IntakeTimeOutCommand(Constants.getDouble("TBHintakePWM"),Constants.getDouble("TBHintakeTime"))))));
+        
+        ac.addCommand(new TwoParallelMotionsCommand(new IntakeTimeOutCommand(Constants.getDouble("TBHintakePWM"),Constants.getDouble("TBHintakeTime")),
+                 0, 
+                 new WindBackWinchTimeOutCommand(Constants.getDouble("TBWinchSetpoint"),Constants.getDouble("TBSecondShotWindTimeout"))));
+         
+        ac.addCommand(new TwoParallelMotionsCommand(new WindBackWinchTimeOutCommand(Constants.getDouble("TBWinchSetpoint"),Constants.getDouble("TBSecondShotWindTimeout")),
+                0,
+                new TwoParallelMotionsCommand(new SetIntakePositionCommand(),
+                0,
+                new IntakeTimeOutCommand(Constants.getDouble("TBHintakePWM"),Constants.getDouble("TBHintakeTime")))));
+         
+        ac.addCommand(new IntakeTimeOutCommand(0,0.1));
+        
+        ac.addCommand(new TurnDegreesTimeOutCommand(Constants.getDouble("TBHTurnToShoot"),Constants.getDouble("TBHTurnToShootTimeout")));
+        
+       
+        
+        ac.addCommand(new WaitCommand(Constants.getDouble("TBHFinalWait")));
+        ac.addCommand(new ShootBallTimeOutCommand(Constants.getDouble("TBWinchDisengageTimeout")));
+        
+        ac.addCommand(new DriveToPosTimeOutCommand(Constants.getDouble("TBHDriveForwardDist2"), 
+                                                   Constants.getDouble("TBHDriveAngle2"), 
+                                                   Constants.getDouble("TBHDriveDistTimeout2")));
+
+        return ac;
+    }
+
    public AutonController shootGoalAndAllianceDriveForward() {
        
        AutonController ac = new AutonController();
@@ -111,7 +237,7 @@ public class AutonSequences {
         return ac;
     }
     
-    public AutonController twoBall() {
+    public AutonController twoBallDriveForward() {
         AutonController ac = new AutonController();
         ac.clear();
         Constants.getInstance();

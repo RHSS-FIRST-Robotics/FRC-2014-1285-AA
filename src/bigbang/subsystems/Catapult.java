@@ -135,32 +135,9 @@ public class Catapult {
             winchSetpoint = Constants.getDouble("bWinchPosOne");
         else if (presetTwo) 
             winchSetpoint = Constants.getDouble("bWinchPosTwo");
+        
                 
         else if(winchPistonState == ENGAGED) {
-//            if (Math.abs(manualAdjustment) > 0.5) {
-//                setWinchPWM(manualAdjustment);
-//                log("in manual");
-//                winchSetpoint = getWinchPot();
-//            }
-          //  else {
-                //engageFirst.set(Math.abs(manualAdjustment) > 0.1 || presetOne || presetTwo);
-                //if(presetOne || presetTwo) {
-
-                //else
-                  //  winchSetpoint = getWinchPot();
-                   
-                
-//                else if (Math.abs(manualAdjustment) > 0.7) {
-//                    //setWinchPWM(manualAdjustment);
-//                    log("in manual");
-////                    if(manualAdjustment > 0.7) {
-////                        winchSetpoint = winchSetpoint - 1;
-////                    }
-////                    else if(manualAdjustment < 0.7){
-////                        winchSetpoint = winchSetpoint + 1;
-////                    }
-//                    setWinchPWM
-//                }
                 
                 if(Math.abs(manualAdjustment) > 0.1) {
                    setWinchPWM(manualAdjustment); 

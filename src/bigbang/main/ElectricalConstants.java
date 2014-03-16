@@ -42,14 +42,14 @@ public class ElectricalConstants {
  
     public static final int LEFT_DRIVE_ENC_A                    = 1; 
     public static final int LEFT_DRIVE_ENC_B                    = 2; 
-    public static final int RIGHT_DRIVE_ENC_A                   = 3; 
-    public static final int RIGHT_DRIVE_ENC_B                   = 4;     
+    public static final int RIGHT_DRIVE_ENC_A                   = 4; 
+    public static final int RIGHT_DRIVE_ENC_B                   = 5;     
 
     //**************************************************************************
     //*************************** Digital Sensors ******************************
     //**************************************************************************
     
-    public static final int COMPRESSOR_PRESSURE_SENSOR          = 5;
+    public static final int COMPRESSOR_PRESSURE_SENSOR          = 3;
     //public static final int INTAKE_BALL_LIMIT                   = ;
 
     //******************UPDATE THESE CONSTANTS WITH REAL ROBOT******************
@@ -58,7 +58,7 @@ public class ElectricalConstants {
     public static final double gearRatio = 1/1; //ratio between wheel and encoder
     public static final double driveEncoderPulsePerRot = pulsePerRotation*gearRatio; //pulse per rotation * gear ratio
     public static final double driveEncoderDistPerTick =(Math.PI*2*driveWheelRadius)/driveEncoderPulsePerRot;
-    public static final boolean rightDriveTrainEncoderReverse = true; //true on real
+    public static final boolean rightDriveTrainEncoderReverse = false; //true on real
     public static final boolean leftDriveTrainEncoderReverse = true; //true on real
 
    //***************************************************************************
@@ -77,8 +77,8 @@ public class ElectricalConstants {
    //*************************** Relays ****************************************
    //***************************************************************************
     
-    public static final int COMPRESSOR_RELAY                    = 1;
+    public static final int COMPRESSOR_RELAY                    = 3;
     public static final int LEFT_SIDE_INTAKE                    = 2;
-    public static final int RIGHT_SIDE_INTAKE                   = 3;
+    public static final int RIGHT_SIDE_INTAKE                   = 1;
 
 }
