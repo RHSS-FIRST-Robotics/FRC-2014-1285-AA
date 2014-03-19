@@ -24,23 +24,25 @@ public class Catapult {
     Talon leftWinchMotor;
     
     DoubleSolenoid winchReleasePiston;
-    DoubleSolenoid trussShotPiston;
-    
-    ToggleBoolean trussShotToggle;
+    DoubleSolenoid ballHolder;
+
     ToggleBoolean winchStateToggle;
     ToggleBoolean winchShiftToggle;
+    
+    ToggleBoolean holderStateToggle;
     
     AnalogChannel winchPot;
     
     Timer winchShiftTimer;
 
+    boolean holdState = false;
+    
     final boolean ENGAGED = true;
     final boolean DISENGAGED = false;
     boolean winchPistonState = DISENGAGED; //piston assumed to be engaged in gearbox in default state when robot is turned on
 
     final boolean EXTENDED = true;
     final boolean RETRACTED = false;
-    boolean trussPistonState = RETRACTED; //piston assumed to be retracted in default state when robot is turned on
             
     public double winchSetpoint;
     
@@ -66,11 +68,11 @@ public class Catapult {
     
         rightWinchMotor = new Talon(ElectricalConstants.RIGHT_WINCH_PWM);
         leftWinchMotor = new Talon(ElectricalConstants.LEFT_WINCH_PWM);
-        
-        trussShotPiston = new DoubleSolenoid (ElectricalConstants.TRUSS_ENGAGE, ElectricalConstants.TRUSS_DISENGAGE);
+
         winchReleasePiston = new DoubleSolenoid ( ElectricalConstants.WINCH_ENGAGE, ElectricalConstants.WINCH_DISENGAGE);
         
-        trussShotToggle = new ToggleBoolean();
+        ballHolder = new DoubleSolenoid(ElectricalConstants.HOLD_ENGAGE, ElectricalConstants.HOLD_DISENGAGE);
+
         winchStateToggle = new ToggleBoolean();
         winchShiftToggle = new ToggleBoolean();
         
@@ -183,58 +185,6 @@ public class Catapult {
             winchReleasePiston.set(DoubleSolenoid.Value.kReverse);
     }
     
-    public void toggleTrussPistonPos(boolean trussPistonToggleButton) {     
-        trussShotToggle.set(trussPistonToggleButton);
-        
-        if(trussShotToggle.get())
-            trussPistonState = !trussPistonState;
-        
-        if(trussPistonState) 
-            trussShotPiston.set(DoubleSolenoid.Value.kForward);
-        else 
-            trussShotPiston.set(DoubleSolenoid.Value.kReverse);
-    }
-    
-    public void holdTrussPistonPos(boolean trussPistonButton) {
-        if(trussPistonButton) {
-            trussShotPiston.set(DoubleSolenoid.Value.kForward);
-            trussPistonState = EXTENDED;
-        }
-        else {
-            trussShotPiston.set(DoubleSolenoid.Value.kReverse);
-            trussPistonState = RETRACTED;
-        }
-    }
-
-//    public void engageWinch(boolean winchShift) {
-//        winchShiftToggle.set(winchShift);
-//        
-//        if(winchPistonState == DISENGAGED && winchShiftToggle.get()){
-//            setEngaged = ENGAGE;
-//            winchShiftTimer.reset();
-//        }
-//        else
-//            setEngaged = FULLY_ENGAGED;
-//        
-//        switch (setEngaged){
-//            case ENGAGE: 
-//                setWinchPWM(1);//Constants.getDouble("bWinchShiftSpeed"));
-//                winchReleasePiston.set(DoubleSolenoid.Value.kReverse);
-//                
-//                if (winchShiftTimer.get() > Constants.getDouble("bWinchShiftTime"))
-//                    setEngaged = FULLY_ENGAGED;
-//                break;
-//            case FULLY_ENGAGED:
-//                setWinchPWM(0);
-//                winchShiftToggle.set(false);
-//                winchPistonState = ENGAGED;
-//                break;
-//        }
-//        
-//        log("in engageWinch");
-//        //winchPistonState = true; 
-//    }
-    
   public void engageWinch(boolean winchShiftToggleButton) {
         winchShiftToggle.set(winchShiftToggleButton);
         
@@ -275,8 +225,16 @@ public class Catapult {
         return winchPistonState;
     }
     
-    public boolean isTrussPistonExtended() {
-        return trussPistonState;
+        public void toggleBallSettler(boolean holdToggle) {
+        holderStateToggle.set(holdToggle);
+        
+        if(holderStateToggle.get())
+            holdState  = !holdState;
+        
+        if(holdState)
+            ballHolder.set(DoubleSolenoid.Value.kForward);
+        else
+            ballHolder.set(DoubleSolenoid.Value.kReverse);
     }
     
     private void log(Object aObject){
