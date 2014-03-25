@@ -88,7 +88,11 @@ public class Catapult {
         winchShiftToggle = new ToggleBoolean();
         
         winchShiftTimer = new Timer();
+        settlerTimer = new Timer();
         winchShiftTimer.start();
+        settlerTimer.start();
+        
+        holderStateToggle = new ToggleBoolean();
         
         Constants.getInstance();
     }
@@ -236,13 +240,30 @@ public class Catapult {
         return winchPistonState;
     }
     
-        public void toggleBallSettler(boolean holdToggle) {
+    public void toggleBallSettler(boolean holdToggle) {
+        if(holdToggle) {
+            ballHolder.set(DoubleSolenoid.Value.kForward);
+            holdState = true;
+        }
+        else {
+             ballHolder.set(DoubleSolenoid.Value.kReverse);
+            holdState = false;
+        }
+    }
+        public void toggleBallSettler2(boolean holdToggle) {
         holderStateToggle.set(holdToggle);
         
         if(holderStateToggle.get())
             holdState  = !holdState;
         
         if(holdState)
+            ballHolder.set(DoubleSolenoid.Value.kForward);
+        else
+            ballHolder.set(DoubleSolenoid.Value.kReverse);
+    }
+        
+    public void holdBallSettler(boolean holdToggle) {  
+        if(holdToggle)
             ballHolder.set(DoubleSolenoid.Value.kForward);
         else
             ballHolder.set(DoubleSolenoid.Value.kReverse);

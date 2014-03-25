@@ -169,16 +169,16 @@ public class AA1285 extends IterativeRobot {
         else
             driveTrain.tankDrive(-leftAnalogY, rightAnalogY, Constants.getInteger("tDriveJoyScaler"));
         
-        intake.intakeBall(intakeJoy, Constants.getInteger("tIntakeJoyScaler"));
+        intake.intakeBall(intakeJoy, 3);
         
         intake.setIntakePosTeleop(toolPad.getRawButton(GamepadConstants.LEFT_BUMPER));
         
         //Ball Holder
-        //catapult.toggleBallSettler(toolPad.getRawButton(GamepadConstants.LEFT_TRIGGER));
+        catapult.toggleBallSettler(toolPad.getRawButton(GamepadConstants.RIGHT_TRIGGER));
         
-        catapult.autoBallSettler(toolPad.getRawButton(GamepadConstants.RIGHT_BUMPER), 
+        /*catapult.autoBallSettler(toolPad.getRawButton(GamepadConstants.RIGHT_BUMPER), 
                                 toolPad.getRawButton(GamepadConstants.LEFT_BUMPER), 
-                                toolPad.getRawButton(GamepadConstants.START_BUTTON));
+                                toolPad.getRawButton(GamepadConstants.START_BUTTON));*/
         
         //Winch code
         catapult.windWinch(winchJoy, toolPad.getRawButton(GamepadConstants.B_BUTTON), //preset one
@@ -186,7 +186,7 @@ public class AA1285 extends IterativeRobot {
         
        catapult.disengageWinch(toolPad.getRawButton(GamepadConstants.RIGHT_BUMPER));
        //catapult.setWinchPWM(winchJoy);
-
+        //catapult.holdBallSettler(toolPad.getRawButton(GamepadConstants.RIGHT_TRIGGER);
         updateSmartDashboard();
         updateDSLCD();
         

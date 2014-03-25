@@ -1,0 +1,175 @@
+gtIntakeJoyScaler = 3
+
+tDriveJoyScaler = 3
+
+TBWinchDisengageTimeout = 0.75
+
+
+bWinchPosOne = 320
+
+bWinchPosTwo = 393
+
+bWinchPosThree = 0
+
+bWinchPosTolerance = 1
+
+aShootBallTimeOut = 0
+
+aTurnDegreesTimeOut = 0
+
+aDriveForwardTimeOut = 0
+
+aShootAllianceBallTimeOut = 0
+
+aDriveToNewZoneTimeOut = 0
+
+bWinchShiftSpeed = 1
+
+bWinchWindBackSpeed = 1
+
+bWinchIncrement = 2
+
+bWinchDecrement = 2
+
+bWinchDeltaErrorTolerance = 1
+
+
+
+aDriveForwardDistance = 0
+
+aAlliancePartnerAngle = 0
+
+aDistanceToAlliancePartner = 0
+
+aDistanceToNewZone = 0
+
+aOtherGoalAngle = 0
+
+aGoalAngleTimeOut = 0
+
+aAlliancePartnerAngleTwo = 0
+
+aDistanceToAlliancePartnerTwo = 0
+
+aTurnDegreesToGoal = 0
+
+aDriveToNewZone = 0
+
+bWinchShiftTime = 0.25
+
+testDriveDistV1 = 24
+testDriveAngleV1 = 0
+testDriveDistTimeoutV1 = 3
+
+testDriveDistV2 = 24
+testDriveAngleV2 = 0
+testDriveDistTimeoutV2 = 3
+
+testAngleGoal = -90
+testAngleTimeout = 2
+
+
+gyroGainV1 = 0.05
+
+driveLongV1P = 0.035
+driveLongV1I = 0
+driveLongV1D = 0.4
+
+driveShortV1P = 0.15
+driveShortV1I = 0
+driveShortV1D = 0.4
+
+gyroGainV2 = 0.052
+
+driveDistTolerance = 4
+
+driveLongV2P = 0.07
+driveLongV2I = 0
+driveLongV2D = 0.55
+
+driveShortV2P = 0.07
+driveShortV2I = 0
+driveShortV2D = 0.55
+
+turnP180 = 0.1
+turnI180 = 0.0
+turnD180 = 0.5
+
+turnPLessThan180 = 0.05
+turnILessThan180 = 0
+turnDLessThan180 = 0.30
+
+intakeTime = 1.5
+intakePWM = -1
+
+//One Ball Auton
+OBDriveForwardDist = 130
+OBDriveAngle = 0
+OBDriveDistTimeout = 3.5
+OBWinchSetpoint = 393
+OBTimeout = 4
+
+//Two Ball Auton
+TBSecondShotWindTimeout = 3
+
+twoBallTurn1 = 90
+twoBallTurnTimeout1 = 1.5
+
+TBDriveForwardDist1 = 20
+TBDriveAngle1 = 0
+TBDriveDistTimeout1 = 1
+
+twoBallTurn2 = -90
+twoBallTurnTimeout2 = 1.25
+
+TBDriveForwardDist2 = 42
+TBDriveAngle2 = 0
+TBDriveDistTimeout2 = 2
+
+TBWinchFirstSetpoint = 575
+TBWinchSecondSetpoint = 630
+
+//Two Ball V3
+
+TBV3WinchSetpoint = 393
+TBV3FirstShotWindTimeout = 4.0
+
+TBV3DriveForwardDist1 = 60
+TBV3DriveAngle1 = 0
+TBV3DriveDistTimeout1 = 1.4
+
+TBV3DriveForwardDist2 = 90
+TBV3DriveAngle2 = 0
+TBV3DriveDistTimeout2 = 2.1
+
+winchDisengageTimeout = 0.5
+
+TBV3IntakePWM1 = -0.7
+TBV3IntakeTime1 = 0.5
+
+TBV3OutakePWM = 0.5
+TBV3OutakeTime = 0.33
+
+TBV3Outtake = 0
+TBV3OuttakeTime1 = 0
+
+TBV3SecondIntakePWM = -1
+TBV3SecondIntakePWMTime = 1.5
+
+TBV3IntakePWM2 = -1
+TBV3IntakeTime2 = 1.5
+
+TBV3WaitBeforeSecondShot = 1.5
+
+InBetweenTime = 1.2
+
+//
+
+TBWait = 0.1
+
+SecondWait = 0.1
+
+OBShotDelay = 1.0
+
+holdTime = 0.5
+retractTime = 0.1

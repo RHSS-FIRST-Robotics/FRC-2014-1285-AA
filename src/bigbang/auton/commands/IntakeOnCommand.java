@@ -8,32 +8,37 @@ package bigbang.auton.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import bigbang.auton.AutonCommand;
-import bigbang.subsystems.Catapult;
+import bigbang.subsystems.Intake;
 
 /**
  *
  * @author Shubham
  */
-public class SetBallSettlerCommand implements AutonCommand{
-    Catapult catapult;   
+public class IntakeOnCommand implements AutonCommand{
+    Intake intake;   
+    double pwmVal;
+    double timeOutInSecs;
     
-    public SetBallSettlerCommand (){
-        catapult = catapult.getInstance();
+    public IntakeOnCommand (double pwm){
+        this.pwmVal = pwm;
+        intake = intake.getInstance();
     }
         
     public void init() {
-        catapult.toggleBallSettler2(false);
+
     }
 
     public boolean run() {
 
-        catapult.toggleBallSettler2
-        (true);
-    
+       // intake.setSpeed(pwmVal);
+        intake.intakeBall(pwmVal,1);
+        //intake.setRollerPWM(pwmVal);
+        //intake.setPG71(pwmVal);
+
         return true;
     }
 
     public void done() {
-
-    } 
+        intake.intakeBall(0, 1);
+    }  
 }
